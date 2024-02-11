@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
     ];
 
     /**
@@ -41,4 +42,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getUsers(string $search = ''){
+        $users =  $this->where(function ($query) use ($search){
+            if($search){
+               $query->where('email', $search);
+               $query->orWhere('name', 'LIKE', "%$search%");
+   
+            }
+         })
+         ->with('comments')
+         ->paginate(15);
+         return $users;
+    }
+
+    public function updateUsers($request){
+        $data = $request->only('name', 'email');
+      if($request->password)
+         $data['password'] = bcrypt($request->password);
+        return $data;
+    }
+
+    
+    //metodo que retorna todos os comnentarios de certo usuario
 }
