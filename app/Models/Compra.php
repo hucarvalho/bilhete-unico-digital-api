@@ -22,8 +22,5 @@ class Compra extends Model
         return $this->belongsTo(Acao::class);
     }
 
-    protected static function newFactory()
-    {
-        return CompraFactory::new();
-    }
+   
 }

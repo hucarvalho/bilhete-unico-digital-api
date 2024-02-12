@@ -18,8 +18,5 @@ class Catraca extends Model
         return $this->hasOne(Carro::class);
     }
 
-    protected static function newFactory()
-{
-    return CatracaFactory::new();
-}
+ 
 }

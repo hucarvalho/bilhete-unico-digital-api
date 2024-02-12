@@ -5,10 +5,13 @@ namespace App\Models;
 use Database\Factories\PassageiroFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Passageiro extends Model
+class Passageiro extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;
 
     protected $fillable = [
         'nomePassageiro',
@@ -24,7 +27,7 @@ class Passageiro extends Model
         'cepPassageiro',
         'fotoPassageiro',
         'emailPassageiro',
-        'senhaPassageiro',
+        'password',
     ];
 
     protected $hidden = [
@@ -35,6 +38,16 @@ class Passageiro extends Model
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     public function cartaoPassageiro(){
         return $this->hasMany(CartaoPassageiro::class);
@@ -47,11 +60,11 @@ class Passageiro extends Model
     public function acaos(){
        return  $this->hasMany(Acao::class);
     }
+    public function codigos(){
+        return  $this->hasMany(Codigo::class);
+     }
 
-    protected static function newFactory()
-    {
-        return PassageiroFactory::new();
-    }
+   
 
     public function getPassageiros(String | null $search = null)
     {
