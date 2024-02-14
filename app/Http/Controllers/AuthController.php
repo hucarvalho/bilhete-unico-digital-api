@@ -6,10 +6,7 @@ use App\Mail\CodeMail;
 use App\Models\Codigo;
 use App\Models\Passageiro;
 use Illuminate\Http\Request;
-use Auth;
-use Illuminate\Support\Facades\URL;
 use Exception;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
