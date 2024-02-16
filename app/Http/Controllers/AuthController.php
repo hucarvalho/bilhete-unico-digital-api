@@ -28,7 +28,6 @@ class AuthController extends Controller
         $passageiro->update($data);
         return response()->json([
             'message' => "Sucesso ao cadastrar!",
-            'senha' => $request->password
         ]);
         }else{
             return response()->json([
@@ -43,11 +42,9 @@ class AuthController extends Controller
             'password' => $request->password
         ];
         
-        if(!$token= auth()->attempt($credentials)){
+        if(!$token = auth()->attempt($credentials)){
             return response()->json([
                 'message' => 'Email ou senha incorretos!',
-                'senha' => $request->password,
-                'cpf' => $request->cpfPassageiro
             ]);
         }
         return $this->createNewToken($token);
@@ -119,8 +116,8 @@ class AuthController extends Controller
                 'wasUsed' =>false
             ]);
             try{
-            Mail::to($passageiro->emailPassageiro)
-                ->send(new CodeMail($code, 'Cadastro', $passageiro->nomePassageiro));
+            // Mail::to($passageiro->emailPassageiro)
+            //     ->send(new CodeMail($code, 'Cadastro', $passageiro->nomePassageiro));
                 return response()->json([
                     'message' => 'sucesso ao enviar email',
                     'id' => $passageiro->id
@@ -129,10 +126,7 @@ class AuthController extends Controller
                 return response()->json([
                     'message' => $e->getMessage()
                 ]);
-            }
-           
-                
-            
+            } 
         }
         
     }
