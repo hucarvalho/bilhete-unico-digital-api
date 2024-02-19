@@ -16,7 +16,13 @@ class PassageiroController extends Controller
     }
     public function getBilhetes($id)
     {
+        if(!$this->model->find($id)){
+            return response()->json([
+                'message' => 'Você ainda não tem bilhetes'
+            ]);
+        }
         $bilhetes = $this->model->find($id)->bilhetes()->get();
+        
         foreach($bilhetes as $bilhete){
             switch($bilhete->tipoBilhete){
                 case "Estudante":

@@ -76,7 +76,7 @@ class AuthController extends Controller
         if(!isset($passageiro[0]))
         {
             return response()->json([
-                'message' => 'Passageiro não encontrado!'
+                'message' => 'CPF não encontrado!'
             ]);
         }
         $passageiro = $passageiro[0];
@@ -84,7 +84,7 @@ class AuthController extends Controller
         if($passageiro->password != null)
         {
             return response()->json([
-                'message' => 'Passageiro já cadastrado'
+                'message' => 'CPF já cadastrado'
             ]);
         }
         $data = [
