@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acao;
 use App\Models\Bilhete;
+use App\Models\Compra;
 use App\Models\Passageiro;
 use App\Models\Passagem;
+use App\Models\Preco;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class PassageiroController extends Controller
 {
@@ -154,5 +159,49 @@ class PassageiroController extends Controller
     public function getCartoes($id)
     {
         return $this->model->find($id)->cartaoPassageiro()->get()->toJson();
+    }
+    public function getPreco(Preco $preco)
+    {
+        return $preco->find(1)->passagemPreco;
+    }
+    public function storeAcao(Request $request,Acao $acao,$id){
+        $data = $request->all();
+        $data['dataAcao'] = now(); 
+        $data['passageiro_id'] = $id;
+        $tipo = $data['tipoAcao'];
+        $acao = $acao->create($data);
+        switch($tipo){
+            case 'Compra':
+               return $this->storeCompra($request->all(), $acao->id);
+
+                break;
+        
+        }
+    }
+    public function storeCompra($dados, $idAcao){
+        $data = $dados;
+        $data['acao_id'] = $idAcao;
+
+        $compra = Compra::create($data);
+
+        try{
+        for ($i = 1; $i<=$compra->qtdPassagensCompra; $i++) {
+            Passagem::create([
+                'statusPassagem' => 'Ativa',
+                'tempoRestantePassagem' => '00:00:00',
+                'bilhete_id' => $data['bilhete_id']
+            ]);
+        }
+        return response()->json([
+            'message' => 'Compra efetuada com sucesso'
+        ]);
+    }catch(Exception $e){
+        return response()->json([
+            'message' => $e->getMessage()
+        ]);
+    }
+
+
+
     }
 }

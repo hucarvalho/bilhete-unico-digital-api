@@ -12,7 +12,8 @@ class Acao extends Model
 
     protected $fillable = [
         'tipoAcao',
-        'dataAcao'
+        'dataAcao',
+        'passageiro_id'
     ];
 
     public function configure(){
@@ -38,10 +39,5 @@ class Acao extends Model
 
     public function compra(){
         return $this->hasOne(Compra::class);
-    }
-
-    protected static function newFactory()
-    {
-        return AcaoFactory::new();
     }
 }

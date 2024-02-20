@@ -12,6 +12,7 @@ class Passagem extends Model
     protected $fillable = [
         'statusPassagem',
         'tempoRestantePassagem',
+        'bilhete_id'
     ];
     public function bilhete(){
         return $this->belongsTo(Bilhete::class);
@@ -21,8 +22,5 @@ class Passagem extends Model
         return $this->hasMany(Consumo::class);
     }
 
-    protected static function newFactory()
-    {
-        return PassagemFactory::new();
-    }
+  
 }

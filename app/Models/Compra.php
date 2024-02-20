@@ -11,7 +11,10 @@ class Compra extends Model
     use HasFactory;
     protected $fillable = [
         'qtdPassagensCompra',
-        'valorTotalCompra'
+        'valorTotalCompra',
+        'acao_id',
+        'forma_pagamento_id',
+        'bilhete_id',
     ];
 
     public function formaPagamento(){
