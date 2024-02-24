@@ -133,7 +133,7 @@ class PassageiroController extends Controller
             ]);
         }
         $compras = $this->model
-                        ->select('compras.qtdPassagensCompra as passagens', 'compras.valorTotalCompra as valor', 'forma_pagamentos.descFormaPagamento', 'acaos.dataAcao as dataCompra')
+                        ->select('compras.qtdPassagensCompra as passagens', 'compras.valorTotalCompra as valor', 'forma_pagamentos.id as forma', 'acaos.dataAcao as dataCompra')
                         ->join('acaos', 'passageiros.id', 'acaos.passageiro_id')
                         ->join('compras', 'acaos.id', 'compras.acao_id')
                         ->join('forma_pagamentos', 'compras.forma_pagamento_id', 'forma_pagamentos.id')
@@ -172,13 +172,13 @@ class PassageiroController extends Controller
         $acao = $acao->create($data);
         switch($tipo){
             case 'Compra':
-               return $this->storeCompra($request->all(), $acao->id);
+               return $this->storeCompra($request->all(), $acao->id, $acao->dataAcao);
 
                 break;
         
         }
     }
-    public function storeCompra($dados, $idAcao){
+    public function storeCompra($dados, $idAcao, $dataAcao){
         $data = $dados;
         $data['acao_id'] = $idAcao;
 
@@ -192,8 +192,20 @@ class PassageiroController extends Controller
                 'bilhete_id' => $data['bilhete_id']
             ]);
         }
+        $dataAcao = explode(" ", $dataAcao);
+        $dataAcao = $dataAcao[0];
+        $dataAcao = explode("-", $dataAcao);
+        $dataAcao = $dataAcao[2]."/".$dataAcao[1]."/".$dataAcao[0];
+        $data = [
+            'passagens' => $compra->qtdPassagensCompra,
+            'valor' => $compra->valorTotalCompra,
+            'forma' => $compra->forma_pagamento_id,
+            'dataCompra' => $dataAcao,
+        ];
+
         return response()->json([
-            'message' => 'Compra efetuada com sucesso'
+
+            'message' => $data
         ]);
     }catch(Exception $e){
         return response()->json([
