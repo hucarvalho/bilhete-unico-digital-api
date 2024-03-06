@@ -10,7 +10,12 @@ class Consumo extends Model
 {
     use HasFactory;
 
-    
+    protected $fillable = [
+        'passagem_id',
+        'acao_id',
+        'carro_id',
+        
+    ];
 
     public function carro(){ 
         return $this->belongsTo(Carro::class);
@@ -22,8 +27,5 @@ class Consumo extends Model
     public function acaos(){
         return $this->belongsTo(Acao::class);
     }
-    protected static function newFactory()
-    {
-        return ConsumoFactory::new();
-    }
+    
 }

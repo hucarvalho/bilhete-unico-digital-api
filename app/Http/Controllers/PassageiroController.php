@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Acao;
 use App\Models\Bilhete;
 use App\Models\Compra;
+use App\Models\Consumo;
 use App\Models\Passageiro;
 use App\Models\Passagem;
 use App\Models\Preco;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
@@ -173,7 +175,9 @@ class PassageiroController extends Controller
         switch($tipo){
             case 'Compra':
                return $this->storeCompra($request->all(), $acao->id, $acao->dataAcao);
-
+               break;
+            case 'Consumo':
+               return $this->storeConsumo($request->all(), $acao->id, $acao->dataAcao);
                 break;
         
         }
@@ -216,4 +220,97 @@ class PassageiroController extends Controller
 
 
     }
+
+    public function checkLastConsumo($idPassagem)
+    {
+        return Consumo::where('passagem_id', $idPassagem)
+            ->orderBy('updated_at', 'desc')
+            ->first();
+    }
+
+    public function getPassagemEmUso($idBilhete){
+        return Passagem::
+            where('statusPassagem', 'Em uso')
+            ->where('bilhete_id', $idBilhete)
+            ->first();
+    }
+    public function getPassagemAtiva($idBilhete){
+        return Passagem::
+            where('statusPassagem', 'Ativa')
+            ->where('bilhete_id', $idBilhete)
+            ->first();
+    }
+
+    public function storeConsumo($request, $acaoId, $data){
+
+        
+        
+
+       //sorteando o numero do carro
+        $request['carro_id'] = fake()->numberBetween(1, 100);
+
+        //verificar se há passagem em uso
+        $passagem = $this->getPassagemEmUso($request['bilhete_id']);
+
+
+        //se nao há verificar se há ativa
+        if($passagem == null){
+            
+            $passagem = $this->getPassagemAtiva($request['bilhete_id']);
+            
+        }  
+        else{
+            //verificar se a passagem foi usada no mesmo carro da ultima vez
+            $ultimoConsumo = $this->checkLastConsumo($passagem->id);
+            if($ultimoConsumo->carro_id == $request['carro_id']){
+                //se foi retornar mensagem de erro
+                return response()->json([
+                    'message' => 'Erro, não é possivel usar o bilhete na mesma catraca'
+                ]);
+            }
+
+
+        } 
+            //se não ha retornar mensagem
+            if($passagem == null){
+                return response()->json([
+                    'message' => 'Você não possui passagens, por favor recarregue seu bilhete'
+                ]);
+            }
+
+        //montando o request
+        $request['acao_id'] = $acaoId;
+        $request['passagem_id'] = $passagem->id;
+        
+        
+        
+        //Atualizando a passagem utilizada
+        if($passagem->statusPassagem != 'Em uso'){
+         $passagem->update([
+            'updated_at' => $data,
+            'statusPassagem' => 'Em uso'
+        ]);
+    }
+        Consumo::create($request);
+        
+
+        return response()->json([
+            'message' => 'Sucesso'
+        ]);
+        }
+
+    public function inativarPassagem($idPassagem)
+    {
+        Passagem::find($idPassagem)->update([
+            'statusPassagem' => 'Inativa'
+        ]);
+        return response()->json([
+            'message' => 'Tempo de integração esgotado'
+        ]);
+    }
+        
+
+        
+        
 }
+

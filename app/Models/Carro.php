@@ -21,8 +21,8 @@ class Carro extends Model
     public function linha(){
         return $this->belongsTo(Linha::class);
     }
-    protected static function newFactory()
-    {
-        return CarroFactory::new();
-    }
+    // protected static function newFactory()
+    // {
+    //     return CarroFactory::new();
+    // }
 }

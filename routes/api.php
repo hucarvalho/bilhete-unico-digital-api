@@ -43,6 +43,8 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::get('/preco', [PassageiroController::class, 'getPreco']);
     
     Route::post('/acao/{id}', [PassageiroController::class, 'storeAcao']);
+    Route::get('/passagens/ativa/{idBilhete}', [PassageiroController::class, 'getPassagemEmUso']);
+    Route::put('/passagens/inativar/{idPassagem}', [PassageiroController::class, 'inativarPassagem']);
 
 Route::group(['middleware'=>'jwt.auth'], function($router){
     Route::get('/bilhetes/{id}', [PassageiroController::class, 'getBilhetes']);

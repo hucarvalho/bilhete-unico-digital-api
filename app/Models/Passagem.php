@@ -12,7 +12,8 @@ class Passagem extends Model
     protected $fillable = [
         'statusPassagem',
         'tempoRestantePassagem',
-        'bilhete_id'
+        'bilhete_id',
+        'updated_at'
     ];
     public function bilhete(){
         return $this->belongsTo(Bilhete::class);
