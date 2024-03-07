@@ -295,7 +295,7 @@ class PassageiroController extends Controller
         
 
         return response()->json([
-            'message' => 'Sucesso'
+            'message' => 'Sucesso ao consumir passagem, boa viagem'
         ]);
         }
 
