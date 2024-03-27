@@ -25,10 +25,12 @@ class PassageiroController extends Controller
     {
         if(!$this->model->find($id)){
             return response()->json([
-                'message' => 'Você ainda não tem bilhetes'
+                'message' => 'semBilhetes'
             ]);
         }
         $bilhetes = $this->model->find($id)->bilhetes()->get();
+
+        if($bilhetes->count() >0){
         
         foreach($bilhetes as $bilhete){
             switch($bilhete->tipoBilhete){
@@ -62,12 +64,17 @@ class PassageiroController extends Controller
                 
         }
         return $bilhetes->toJson();
+    }else{
+        return response()->json([
+            'message' => 'semBilhetes'
+        ]);
+    }
     }
     public function getPassagens($id, Passagem $passagem, Bilhete $bilhete)
     {
         if(!$bilhete->find($id)){
             return response()->json([
-                'message' => 'nenhum bilhete encontrado'
+                'message' => false
             ]);
         }
         $qtdPassagem = $passagem->where('bilhete_id', $id)->where('statusPassagem', 'Ativa')->get()->count();
