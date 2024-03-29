@@ -27,11 +27,11 @@ class AuthController extends Controller
         
         $passageiro->update($data);
         return response()->json([
-            'message' => "Sucesso ao cadastrar!",
+            'message' => true,
         ]);
         }else{
             return response()->json([
-                'message' => 'Erro ao cadastrar!'
+                'message' => false
             ]);
         }
     }
@@ -44,7 +44,7 @@ class AuthController extends Controller
         
         if(!$token = auth()->attempt($credentials)){
             return response()->json([
-                'message' => 'Email ou senha incorretos!',
+                'message' => false,
             ]);
         }
         return $this->createNewToken($token);
@@ -137,7 +137,7 @@ class AuthController extends Controller
             $codigo = $codigo->where('codigo', $request->codigo)->where('passageiro_id', $id)->get();
             if(!isset($codigo[0])){
                 return response()->json([
-                    'message' => 'Esse não é o codigo, tente novamente',
+                    'message' => 'incorreto',
                     
                 ]);
             }
