@@ -315,6 +315,66 @@ class PassageiroController extends Controller
             'message' => 'Tempo de integração esgotado'
         ]);
     }
+
+    public function callConsumo($idCatraca, $idBilhete)
+    {
+        $idPassageiro = $this->model->
+                            select('passageiros.id')
+                            ->join('bilhetes', 'passageiros.id', 'bilhetes.passageiro_id')
+                            ->where('bilhetes.id', $idBilhete)
+                            ->first();
+        
+        $acao= new Acao();
+         $acao = $acao->create([
+            'dataAcao' => now(),
+            'tipoAcao' =>'Consumo',
+            'passageiro_id' => $idPassageiro->id
+        ]);
+
+        //verificar se há passagem em uso
+        $passagem = $this->getPassagemEmUso($idBilhete);
+
+
+        //se nao há verificar se há ativa
+        if($passagem == null){
+            
+            $passagem = $this->getPassagemAtiva($idBilhete);
+            
+        }  
+        else{
+            //verificar se a passagem foi usada no mesmo carro da ultima vez
+            $ultimoConsumo = $this->checkLastConsumo($passagem->id);
+            if($ultimoConsumo->carro_id == $idCatraca){
+                //se foi retornar mensagem de erro
+                return response()->json(0);
+            }
+
+
+        } 
+            //se não ha retornar mensagem
+            if($passagem == null){
+                return response()->json(0);
+            }
+
+        //montando o request
+        $data['acao_id'] = $acao->id;
+        $data['passagem_id'] = $passagem->id;
+        $data['carro_id'] = $idCatraca;
+        
+        
+        //Atualizando a passagem utilizada
+        if($passagem->statusPassagem != 'Em uso'){
+         $passagem->update([
+            'updated_at' => $acao->dataAcao,
+            'statusPassagem' => 'Em uso'
+        ]);
+    }
+        Consumo::create($data);
+        
+
+        return response()->json(1);
+
+    }
         
 
         
