@@ -41,7 +41,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::get('/compras/{id}/{bilheteId}', [PassageiroController::class, 'getComprasByBilhete']);
     Route::get('/cartao/{id}', [PassageiroController::class, 'getCartoes']);
     Route::get('/preco', [PassageiroController::class, 'getPreco']);
-    
+    Route::get('/countCompras/{idBilhete}', [PassageiroController::class, 'countCompras']);
     Route::get('/consumo/{idCatraca}/{idBilhete}', [PassageiroController::class, 'callConsumo']);
     Route::post('/acao/{id}', [PassageiroController::class, 'storeAcao']);
     Route::get('/passagens/ativa/{idBilhete}', [PassageiroController::class, 'getPassagemEmUso']);

@@ -312,7 +312,7 @@ class PassageiroController extends Controller
             'statusPassagem' => 'Inativa'
         ]);
         return response()->json([
-            'message' => 'Tempo de integração esgotado'
+            'message' => true
         ]);
     }
 
@@ -374,6 +374,18 @@ class PassageiroController extends Controller
 
         return response()->json(1);
 
+    }
+
+    public function countCompras($idBilhete){
+        $qtdCompras = $this->model
+        ->select('compras.qtdPassagensCompra as passagens', 'compras.valorTotalCompra as valor', 'forma_pagamentos.id as forma', 'acaos.dataAcao as dataCompra')
+        ->join('acaos', 'passageiros.id', 'acaos.passageiro_id')
+        ->join('compras', 'acaos.id', 'compras.acao_id')
+        ->join('forma_pagamentos', 'compras.forma_pagamento_id', 'forma_pagamentos.id')
+        ->where('compras.bilhete_id', $idBilhete)
+        ->get()
+        ->count();
+        return $qtdCompras;
     }
         
 
