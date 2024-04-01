@@ -70,35 +70,47 @@ class PassageiroController extends Controller
         ]);
     }
     }
-    public function getPassagens($id, Passagem $passagem, Bilhete $bilhete)
-    {
-        if(!$bilhete->find($id)){
-            return response()->json([
-                'message' => false
-            ]);
-        }
-        $qtdPassagem = $passagem->where('bilhete_id', $id)->where('statusPassagem', 'Ativa')->get()->count();
-        $consumos = $passagem
-                        ->select('acaos.id as id','acaos.dataAcao as data', 'linhas.nomeLinha as linha', 'linhas.numLinha as numero')
-                        ->join('consumos', 'passagems.id', 'consumos.passagem_id')
-                        ->join('acaos', 'consumos.acao_id', 'acaos.id')
-                        ->join('carros', 'consumos.carro_id', 'carros.id')
-                        ->join('linhas', 'carros.linha_id', 'linhas.id')
-                        ->where('passagems.bilhete_id', $id)
-                        ->get();
-        $meses = ['01' => 'JAN', '02' => 'FEV', '03' => 'MAR', '04' => 'ABR', '05' => 'MAI', '06' => 'JUN', '07' => 'JUL', '08' => 'AGO', '09' => 'SET', '10' => 'OUT','11' => 'NOV', '12' => 'DEZ'];
-        foreach($consumos as $consumo){
-            $tratamento = explode(" ", $consumo['data']);
-            $tratamento = explode("-",$tratamento[0]);
-            $consumo['data'] = $tratamento[2] . " ".$meses[$tratamento[1]];
+    // public function getPassagens($id, Passagem $passagem, Bilhete $bilhete)
+    // {
+    //     if(!$bilhete->find($id)){
+    //         return response()->json([
+    //             'message' => false
+    //         ]);
+    //     }
+    //     $qtdPassagem = $passagem->where('bilhete_id', $id)->where('statusPassagem', 'Ativa')->get()->count();
+    //     $consumos = $passagem
+    //                     ->select('acaos.id as id','acaos.dataAcao as data', 'linhas.nomeLinha as linha', 'linhas.numLinha as numero')
+    //                     ->join('consumos', 'passagems.id', 'consumos.passagem_id')
+    //                     ->join('acaos', 'consumos.acao_id', 'acaos.id')
+    //                     ->join('carros', 'consumos.carro_id', 'carros.id')
+    //                     ->join('linhas', 'carros.linha_id', 'linhas.id')
+    //                     ->where('passagems.bilhete_id', $id)
+    //                     ->orderBy('consumos.id', 'desc')
+    //                     ->take(7)
+    //                     ->get();
+    //     $qtdConsumos = $passagem
+    //                     ->select('acaos.id as id','acaos.dataAcao as data', 'linhas.nomeLinha as linha', 'linhas.numLinha as numero')
+    //                     ->join('consumos', 'passagems.id', 'consumos.passagem_id')
+    //                     ->join('acaos', 'consumos.acao_id', 'acaos.id')
+    //                     ->join('carros', 'consumos.carro_id', 'carros.id')
+    //                     ->join('linhas', 'carros.linha_id', 'linhas.id')
+    //                     ->where('passagems.bilhete_id', $id)
+    //                     ->get()
+    //                     ->count();
 
-        }
-        return response()->json([
-            'consumos' => $consumos,
-            'qtdPassagens' => $qtdPassagem,
-            'qtdConsumos' => $consumos->count()
-        ]);
-    }
+    //     $meses = ['01' => 'JAN', '02' => 'FEV', '03' => 'MAR', '04' => 'ABR', '05' => 'MAI', '06' => 'JUN', '07' => 'JUL', '08' => 'AGO', '09' => 'SET', '10' => 'OUT','11' => 'NOV', '12' => 'DEZ'];
+    //     foreach($consumos as $consumo){
+    //         $tratamento = explode(" ", $consumo['data']);
+    //         $tratamento = explode("-",$tratamento[0]);
+    //         $consumo['data'] = $tratamento[2] . " ".$meses[$tratamento[1]];
+
+    //     }
+    //     return response()->json([
+    //         'consumos' => $consumos,
+    //         'qtdPassagens' => $qtdPassagem,
+    //         'qtdConsumos' => $qtdConsumos
+    //     ]);
+    // }
     public function getCompras($id)
     {
         if(!$compras = $this->model->find($id)){
@@ -112,7 +124,17 @@ class PassageiroController extends Controller
                         ->join('compras', 'acaos.id', 'compras.acao_id')
                         ->join('forma_pagamentos', 'compras.forma_pagamento_id', 'forma_pagamentos.id')
                         ->where('passageiros.id', $id)
+                        ->orderBy('compras.id', 'desc')
+                        ->take(7)
                         ->get();
+        $qtdCompras = $this->model
+                        ->select('compras.qtdPassagensCompra as passagens', 'compras.valorTotalCompra as valor', 'forma_pagamentos.descFormaPagamento', 'acaos.dataAcao as dataCompra')
+                        ->join('acaos', 'passageiros.id', 'acaos.passageiro_id')
+                        ->join('compras', 'acaos.id', 'compras.acao_id')
+                        ->join('forma_pagamentos', 'compras.forma_pagamento_id', 'forma_pagamentos.id')
+                        ->where('passageiros.id', $id)
+                        ->get()
+                        ->count();
         $meses = ['01' => 'JAN', '02' => 'FEV', '03' => 'MAR', '04' => 'ABR', '05' => 'MAI', '06' => 'JUN', '07' => 'JUL', '08' => 'AGO', '09' => 'SET', '10' => 'OUT','11' => 'NOV', '12' => 'DEZ'];
         $i=1;
         foreach($compras as $compra){
@@ -125,7 +147,7 @@ class PassageiroController extends Controller
         }            
             return response()->json([
                 'compras' => $compras,
-                'qtdCompras' => $compras->count()
+                'qtdCompras' => $qtdCompras
             ]);
         
     }
@@ -148,7 +170,18 @@ class PassageiroController extends Controller
                         ->join('forma_pagamentos', 'compras.forma_pagamento_id', 'forma_pagamentos.id')
                         ->where('passageiros.id', $id)
                         ->where('compras.bilhete_id', $bilheteId)
+                        ->orderBy('compras.id', 'desc')
+                        ->take(7)
                         ->get();
+        $qtdCompras = $this->model
+                        ->select('compras.qtdPassagensCompra as passagens', 'compras.valorTotalCompra as valor', 'forma_pagamentos.id as forma', 'acaos.dataAcao as dataCompra')
+                        ->join('acaos', 'passageiros.id', 'acaos.passageiro_id')
+                        ->join('compras', 'acaos.id', 'compras.acao_id')
+                        ->join('forma_pagamentos', 'compras.forma_pagamento_id', 'forma_pagamentos.id')
+                        ->where('passageiros.id', $id)
+                        ->where('compras.bilhete_id', $bilheteId)
+                        ->get()
+                        ->count();
         $meses = ['01' => 'JAN', '02' => 'FEV', '03' => 'MAR', '04' => 'ABR', '05' => 'MAI', '06' => 'JUN', '07' => 'JUL', '08' => 'AGO', '09' => 'SET', '10' => 'OUT','11' => 'NOV', '12' => 'DEZ'];
         $i = 1;
         foreach($compras as $compra){
@@ -161,7 +194,7 @@ class PassageiroController extends Controller
         }            
             return response()->json([
                 'compras' => $compras,
-                'qtdCompras' => $compras->count()
+                'qtdCompras' => $qtdCompras
             ]);
         
     }
@@ -182,10 +215,10 @@ class PassageiroController extends Controller
         switch($tipo){
             case 'Compra':
                return $this->storeCompra($request->all(), $acao->id, $acao->dataAcao);
-               break;
+             
             case 'Consumo':
                return $this->storeConsumo($request->all(), $acao->id, $acao->dataAcao);
-                break;
+             
         
         }
     }
@@ -197,11 +230,11 @@ class PassageiroController extends Controller
 
         try{
         for ($i = 1; $i<=$compra->qtdPassagensCompra; $i++) {
-            Passagem::create([
-                'statusPassagem' => 'Ativa',
-                'tempoRestantePassagem' => '00:00:00',
-                'bilhete_id' => $data['bilhete_id']
-            ]);
+                Passagem::create([
+                    'statusPassagem' => 'Ativa',
+                    'tempoRestantePassagem' => '00:00:00',
+                    'bilhete_id' => $data['bilhete_id']
+                ]);
         }
         $dataAcao = explode(" ", $dataAcao);
         $dataAcao = $dataAcao[0];

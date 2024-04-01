@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PassageiroController;
+use App\Http\Controllers\PassagemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
 });
 
     
-    Route::get('/passagens/{id}', [PassageiroController::class, 'getPassagens']);
+    Route::get('/passagens/{id}', [PassagemController::class, 'getPassagens']);
     Route::get('/compras/{id}', [PassageiroController::class, 'getCompras']);
     Route::get('/compras/{id}/{bilheteId}', [PassageiroController::class, 'getComprasByBilhete']);
     Route::get('/cartao/{id}', [PassageiroController::class, 'getCartoes']);
@@ -44,7 +45,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::get('/countCompras/{idBilhete}', [PassageiroController::class, 'countCompras']);
     Route::get('/consumo/{idCatraca}/{idBilhete}', [PassageiroController::class, 'callConsumo']);
     Route::post('/acao/{id}', [PassageiroController::class, 'storeAcao']);
-    Route::get('/passagens/ativa/{idBilhete}', [PassageiroController::class, 'getPassagemEmUso']);
+    Route::get('/passagens/ativa/{idBilhete}', [PassagemController::class, 'getPassagemEmUso']);
     Route::put('/passagens/inativar/{idPassagem}', [PassageiroController::class, 'inativarPassagem']);
 
 Route::group(['middleware'=>'jwt.auth'], function($router){
