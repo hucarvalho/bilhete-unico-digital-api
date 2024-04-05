@@ -34,4 +34,10 @@ class CartaoController extends Controller
                     ]);
                 }
     }
+    public function getCartao($id){
+        
+        return response()->json(
+            $this->model->where('passageiro_id',$id)->get());
+
+    }
 }
