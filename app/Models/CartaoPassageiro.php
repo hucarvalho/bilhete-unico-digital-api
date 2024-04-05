@@ -17,13 +17,14 @@ class CartaoPassageiro extends Model
         'contaCartao',
         'agenciaCartao',
         'validadeCartao',
+        'passageiro_id'
     ];
 
     public function passageiro(){
         return $this->belongsTo(Passageiro::class);
     }
-    protected static function newFactory()
-    {
-        return CartaoPassageiroFactory::new();
-    }
+    // protected static function newFactory()
+    // {
+    //     return CartaoPassageiroFactory::new();
+    // }
 }
