@@ -49,6 +49,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::get('/passagens/ativa/{idBilhete}', [PassagemController::class, 'getPassagemEmUso']);
     Route::put('/passagens/inativar/{idPassagem}', [PassageiroController::class, 'inativarPassagem']);
     Route::post('/storeCartao/{id}', [CartaoController::class, 'storeCartao']);
+    Route::delete('/destroyCartao/{id}', [CartaoController::class, 'destroyCartao']);
     
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
 

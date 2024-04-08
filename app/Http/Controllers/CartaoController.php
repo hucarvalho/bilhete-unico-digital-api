@@ -40,4 +40,11 @@ class CartaoController extends Controller
             $this->model->where('passageiro_id',$id)->get());
 
     }
+
+    public function destroyCartao($id){
+        $this->model->destroy($id);
+
+        return response ()-> json("Usuario deletado com sucesso");
+
+    }
 }
