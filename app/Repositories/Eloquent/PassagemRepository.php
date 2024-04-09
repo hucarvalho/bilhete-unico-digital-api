@@ -69,4 +69,19 @@ class PassagemRepository extends AbstractRepository implements PassagemRepositor
             ->where('bilhete_id', $idBilhete)
             ->first();
     }
+    public function getPassagemAtiva($idBilhete){
+        return $this->model 
+            ->where('statusPassagem', 'Ativa')
+            ->where('bilhete_id', $idBilhete)
+            ->first();
+    }
+    public function inativarPassagem($idPassagem)
+    {
+        $this->model->find($idPassagem)->update([
+            'statusPassagem' => 'Inativa'
+        ]);
+        return response()->json([
+            'message' => true
+        ]);
+    }
 }
