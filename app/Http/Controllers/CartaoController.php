@@ -21,7 +21,7 @@ class CartaoController extends Controller
 
             $data['passageiro_id'] = $id;
             
-            $cartao = CartaoPassageiro::create($data);
+            CartaoPassageiro::create($data);
            
                     return response()->json([
             
