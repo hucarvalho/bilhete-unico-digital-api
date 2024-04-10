@@ -148,4 +148,26 @@ class AuthController extends Controller
             ]);
         }
     }
+    public function updateNewPassword(Request $request,$id){
+        try{
+          
+            $data = $request->all();
+        if($request->password != ''){
+            $data['password'] = bcrypt($data['password']);
+        }
+        $this->model->find($id)->update($data);
+
+           
+                    return response()->json([
+            
+                        'message' => $data['password']
+                    ]);
+            
+                }catch(Exception $e){
+                    return response()->json([
+                        'message' => $e->getMessage()
+                    ]);
+                }
+    }
+
 }

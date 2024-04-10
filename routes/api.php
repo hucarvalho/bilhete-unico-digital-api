@@ -36,6 +36,8 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::get('/error', [AuthController::class, 'error']);
     Route::post('/requireCod', [AuthController::class, 'codigoCadastro']);
     Route::post('/verCod/{id}', [AuthController::class, 'verificaCodigo']);
+    Route::post('/putPassword/{id}', [AuthController::class, 'updateNewPassword']);
+
 });
 
     
