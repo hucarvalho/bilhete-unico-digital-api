@@ -19,5 +19,10 @@ class PassagemController extends Controller
     public function getPassagemEmUso($idBilhete){
         return $this->model->getPassagemEmUso($idBilhete);
     }
-   
+    public function getPassagemAtiva($idBilhete){
+        return $this->model->getPassagemAtiva($idBilhete);
+    }
+   public function inativarPassagem($idBilhete){
+    return $this->model->inativarPassagem($idBilhete);
+   }
 }

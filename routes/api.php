@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BilheteController;
 use App\Http\Controllers\CartaoController;
 use App\Http\Controllers\PassageiroController;
 use App\Http\Controllers\PassagemController;
@@ -47,12 +48,12 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::get('/consumo/{idCatraca}/{idBilhete}', [PassageiroController::class, 'callConsumo']);
     Route::post('/acao/{id}', [PassageiroController::class, 'storeAcao']);
     Route::get('/passagens/ativa/{idBilhete}', [PassagemController::class, 'getPassagemEmUso']);
-    Route::put('/passagens/inativar/{idPassagem}', [PassageiroController::class, 'inativarPassagem']);
+    Route::put('/passagens/inativar/{idPassagem}', [PassagemController::class, 'inativarPassagem']);
     Route::post('/storeCartao/{id}', [CartaoController::class, 'storeCartao']);
     Route::delete('/destroyCartao/{id}', [CartaoController::class, 'destroyCartao']);
     
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
 
 Route::group(['middleware'=>'jwt.auth'], function($router){
-    Route::get('/bilhetes/{id}', [PassageiroController::class, 'getBilhetes']);
+    Route::get('/bilhetes/{idPassageiro}', [BilheteController::class, 'getBilhetes']);
 });
