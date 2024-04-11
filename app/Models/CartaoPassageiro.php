@@ -10,6 +10,8 @@ class CartaoPassageiro extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'nomeTitularCartao',
+        'cpfTitularCartao',
         'numeroCartao',
         'bandeiraCartao',
         'bancoCartao',
