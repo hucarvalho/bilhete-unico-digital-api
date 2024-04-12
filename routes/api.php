@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjudaController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BilheteController;
@@ -53,7 +54,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::put('/passagens/inativar/{idPassagem}', [PassagemController::class, 'inativarPassagem']);
     Route::post('/storeCartao/{id}', [CartaoController::class, 'storeCartao']);
     Route::delete('/destroyCartao/{id}', [CartaoController::class, 'destroyCartao']);
-    
+    Route::post('/searchAjuda', [AjudaController::class, 'searchAjuda']);
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
 
 Route::group(['middleware'=>'jwt.auth'], function($router){
