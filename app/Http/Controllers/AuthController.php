@@ -169,5 +169,59 @@ class AuthController extends Controller
                     ]);
                 }
     }
+    public function findByCpfRecuperar(Request $request)
+    {
+        $passageiro =$this->model->where('cpfPassageiro',$request->cpfPassageiro)->get();
+        if(!isset($passageiro[0]))
+        {
+            return response()->json([
+                'message' => 'CPF não encontrado!'
+            ]);
+        }
+        $passageiro = $passageiro[0];
+        
+        $data = [
+            'id' => $passageiro->id,
+            'emailPassageiro' => $passageiro->emailPassageiro,
+            'numTelPassageiro' => $passageiro->numTelPassageiro
+        ];
+        return response()->json([
+            'usuario' => $data
+        ]);
+    }
+    public function codigoCadastroRecuperar(Request $request, Codigo $codigo)
+    {
+        if(isset($request->emailPassageiro))
+        {
+            
+            $code = fake()->numerify('####');
+            $passageiro =$this->model->where('emailPassageiro',$request->emailPassageiro)->get();
+            if(!isset($passageiro[0])){
+                return response()->json([
+                    'message' => 'Email não encontrado'
+                ]);
+            }
+            $passageiro = $passageiro[0];
+            $codigo->create([
+                'codigo' => $code,
+                'tipoCodigo' => 'Recuperar',
+                'passageiro_id' => $passageiro->id,
+                'wasUsed' =>false
+            ]);
+            try{
+            // Mail::to($passageiro->emailPassageiro)
+            //     ->send(new CodeMail($code, 'Cadastro', $passageiro->nomePassageiro));
+                return response()->json([
+                    'message' => 'sucesso ao enviar email',
+                    'id' => $passageiro->id
+                ]);
+            }catch(Exception $e){
+                return response()->json([
+                    'message' => $e->getMessage()
+                ]);
+            } 
+        }
+        
+    }
 
 }

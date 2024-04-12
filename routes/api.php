@@ -38,6 +38,8 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::post('/requireCod', [AuthController::class, 'codigoCadastro']);
     Route::post('/verCod/{id}', [AuthController::class, 'verificaCodigo']);
     Route::post('/putPassword/{id}', [AuthController::class, 'updateNewPassword']);
+    Route::post('/recuperar', [AuthController::class, 'findByCpfRecuperar']);
+    Route::post('/requireCodRecuperar', [AuthController::class, 'codigoCadastroRecuperar']);
 
 });
 
