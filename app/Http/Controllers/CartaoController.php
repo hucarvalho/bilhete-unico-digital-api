@@ -16,35 +16,14 @@ class CartaoController extends Controller
     }
     public function storeCartao(Request $request, $id)
     {
-        try{
-            $data = $request->all();
-
-            $data['passageiro_id'] = $id;
-            
-            CartaoPassageiro::create($data);
-           
-                    return response()->json([
-            
-                        'message' => $data
-                    ]);
-            
-                }catch(Exception $e){
-                    return response()->json([
-                        'message' => $e->getMessage()
-                    ]);
-                }
+        return $this->model->storeCartao($request,$id);
     }
     public function getCartao($id){
         
-        return response()->json(
-            $this->model->where('passageiro_id',$id)->get());
-
+        return $this->model->getCartao($id);
     }
 
     public function destroyCartao($id){
-        $this->model->destroy($id);
-
-        return response ()-> json("Usuario deletado com sucesso");
-
+        return $this->model->destroyCartao($id);
     }
 }
