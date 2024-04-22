@@ -17,6 +17,14 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Contracts\PassagemRepositoryInterface',
             'App\Repositories\Eloquent\PassagemRepository'
         );
+        $this->app->bind(
+            'App\Repositories\Contracts\AjudaRepositoryInterface',
+            'App\Repositories\Eloquent\AjudaRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Contracts\PassageiroRepositoryInterface',
+            'App\Repositories\Eloquent\PassageiroRepository'
+        );
     }
 
     /**
