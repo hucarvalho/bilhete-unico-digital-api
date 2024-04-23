@@ -58,6 +58,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::delete('/destroyCartao/{id}', [CartaoController::class, 'destroyCartao']);
     Route::post('/searchAjuda', [AjudaController::class, 'searchAjuda']);
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
+    Route::post('/insertFoto/{idPassageiro}', [PassageiroController::class, 'insertFoto']);
 
 Route::group(['middleware'=>'jwt.auth'], function($router){
     Route::get('/bilhetes/{idPassageiro}', [BilheteController::class, 'getBilhetes']);

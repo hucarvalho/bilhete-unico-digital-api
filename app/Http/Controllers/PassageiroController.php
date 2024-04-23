@@ -76,7 +76,11 @@ class PassageiroController extends Controller
         return $this->model->countCompras($idBilhete);
     }
         
-
+    public function insertFoto($idPassageiro, Request $request){
+        return response()->json([
+            'respsta' => $request->file->name
+        ]);
+    }
         
         
 }
