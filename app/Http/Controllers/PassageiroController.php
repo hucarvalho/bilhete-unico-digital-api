@@ -12,8 +12,10 @@ use App\Models\Preco;
 use App\Repositories\Contracts\PassageiroRepositoryInterface;
 use DateTime;
 use Exception;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Storage;
 
 class PassageiroController extends Controller
 {
@@ -77,9 +79,29 @@ class PassageiroController extends Controller
     }
         
     public function insertFoto($idPassageiro, Request $request){
+        $passageiro = $this->model->findById($idPassageiro);
+        
+
+       
+        if(Storage::exists($passageiro->fotoPassageiro)){
+            Storage::delete($passageiro->fotoPassageiro);
+        }
+        
+        
+        try{
+        $filename = $request->file('file')->store('passageiros');
+        $data = ["fotoPassageiro" => $filename];
+        $this->model->update($idPassageiro, $data);
+        $passageiro->fotoPassageiro = $filename;
         return response()->json([
-            'respsta' => $request->file->name
+            "passageiro" => $passageiro
         ]);
+        }
+        catch(Exception $e){
+            return false;
+        }
+        
+
     }
         
         

@@ -17,4 +17,6 @@ interface PassageiroRepositoryInterface{
     public function inativarPassagem($idPassagem);
     public function callConsumo($idCatraca, $idBilhete);
     public function countCompras($idBilhete);
+    public function findById($id);
+    public function update($id, $data);
 }
