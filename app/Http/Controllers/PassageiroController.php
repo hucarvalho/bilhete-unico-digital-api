@@ -83,7 +83,7 @@ class PassageiroController extends Controller
         
 
        
-        if(Storage::exists($passageiro->fotoPassageiro)){
+        if(Storage::exists($passageiro->fotoPassageiro != null && $passageiro->fotoPassageiro)){
             Storage::delete($passageiro->fotoPassageiro);
         }
         
