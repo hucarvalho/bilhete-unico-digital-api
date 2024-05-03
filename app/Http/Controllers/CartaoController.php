@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartaoPassageiro;
+
+use App\Repositories\Contracts\CartaoRepositoryInterface;
 use Illuminate\Http\Request;
 use Exception;
 
 class CartaoController extends Controller
 {
-    protected $model;
+    protected $model = CartaoPassageiro::class;
 
-    public function __construct(CartaoPassageiro $cartaoPassageiro)
+    public function __construct(CartaoRepositoryInterface $cartaoPassageiroRepositoryInterface)
     {
-        $this->model = $cartaoPassageiro;
+        $this->model = $cartaoPassageiroRepositoryInterface;
     }
     public function storeCartao(Request $request, $id)
     {
