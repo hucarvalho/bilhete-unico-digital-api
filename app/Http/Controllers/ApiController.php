@@ -12,5 +12,8 @@ class ApiController extends Controller
         $this->model = $passageiro;
     }
     
+    public function testConnection(){
+        return true;
+    }
    
 }

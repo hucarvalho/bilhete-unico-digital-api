@@ -44,6 +44,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
 });
 
     
+    Route::get('/testConnection', [ApiController::class, 'testConnection']);
     Route::get('/passagens/{id}', [PassagemController::class, 'getPassagens']);
     Route::get('/compras/{id}', [PassageiroController::class, 'getCompras']);
     Route::get('/compras/{id}/{bilheteId}', [PassageiroController::class, 'getComprasByBilhete']);
