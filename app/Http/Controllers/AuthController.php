@@ -96,6 +96,7 @@ class AuthController extends Controller
             'usuario' => $data
         ]);
     }
+
     public function codigoCadastro(Request $request, Codigo $codigo)
     {
         if(isset($request->emailPassageiro))
@@ -161,6 +162,44 @@ class AuthController extends Controller
                     return response()->json([
             
                         'message' => $data['password']
+                    ]);
+            
+                }catch(Exception $e){
+                    return response()->json([
+                        'message' => $e->getMessage()
+                    ]);
+                }
+    }
+    public function updateNewEmail(Request $request,$id){
+        try{
+          
+            $data = $request->all();
+        if($request->emailPassageiro != ''){
+            $this->model->find($id)->update($data);
+        }
+
+                    return response()->json([
+            
+                        'message' => $data['emailPassageiro']
+                    ]);
+            
+                }catch(Exception $e){
+                    return response()->json([
+                        'message' => $e->getMessage()
+                    ]);
+                }
+    }
+    public function updateNewTelefone(Request $request,$id){
+        try{
+          
+            $data = $request->all();
+        if($request->numTelPassageiro != ''){
+            $this->model->find($id)->update($data);
+        }
+
+                    return response()->json([
+            
+                        'message certo meu patrão' => $data['numTelPassageiro']
                     ]);
             
                 }catch(Exception $e){
