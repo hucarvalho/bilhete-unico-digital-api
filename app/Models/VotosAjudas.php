@@ -11,9 +11,13 @@ class VotosAjudas extends Model
 
     protected $fillable = [
         'util',
-        'ajuda_id'
+        'ajuda_id',
+        'passageiro_id'
     ];
 
+    public function passageiros(){
+        return  $this->belongsTo(Passageiro::class);
+     }
 
     public function ajuda(){
         return $this->belongsTo(Ajuda::class);
