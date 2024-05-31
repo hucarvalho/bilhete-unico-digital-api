@@ -30,4 +30,16 @@ class VotosAjudasController extends Controller
             ]);
         }
     }
+
+    public function getVoto($idPassageiro, $ajuda_id)
+    {
+        // Faça a consulta usando o modelo VotosAjudas e o método where para adicionar as condições
+        return response()->json(
+        VotosAjudas::where('passageiro_id', $idPassageiro)
+                           ->where('ajuda_id', $ajuda_id)
+                           ->pluck('util')
+                           ->first()
+
+        );
+    }
 }

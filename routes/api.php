@@ -60,6 +60,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::put('/passagens/inativar/{idPassagem}', [PassagemController::class, 'inativarPassagem']);
     Route::post('/storeCartao/{id}', [CartaoController::class, 'storeCartao']);
     Route::post('/storeVoto/{id}', [VotosAjudasController::class, 'store']);
+    Route::get('/voto/{id}/{idAjuda}', [VotosAjudasController::class, 'getVoto']);
     Route::delete('/destroyCartao/{id}', [CartaoController::class, 'destroyCartao']);
     Route::post('/searchAjuda', [AjudaController::class, 'searchAjuda']);
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
