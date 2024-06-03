@@ -18,7 +18,7 @@ class AjudaController extends Controller
     public function searchAjuda(Request $request){
       return $this->model->searchAjuda($request);
     }
-    
+
     
     
     

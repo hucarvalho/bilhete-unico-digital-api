@@ -61,10 +61,12 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::post('/storeCartao/{id}', [CartaoController::class, 'storeCartao']);
     Route::post('/storeVoto/{id}', [VotosAjudasController::class, 'store']);
     Route::get('/voto/{id}/{idAjuda}', [VotosAjudasController::class, 'getVoto']);
+    Route::get('/votoPorcentagem', [VotosAjudasController::class, 'getPorcentagemVoto']);
     Route::delete('/destroyCartao/{id}', [CartaoController::class, 'destroyCartao']);
     Route::post('/searchAjuda', [AjudaController::class, 'searchAjuda']);
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
     Route::post('/insertFoto/{idPassageiro}', [PassageiroController::class, 'insertFoto']);
+    
 
 Route::group(['middleware'=>'jwt.auth'], function($router){
     Route::get('/bilhetes/{idPassageiro}', [BilheteController::class, 'getBilhetes']);
