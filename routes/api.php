@@ -7,6 +7,7 @@ use App\Http\Controllers\BilheteController;
 use App\Http\Controllers\CartaoController;
 use App\Http\Controllers\PassageiroController;
 use App\Http\Controllers\PassagemController;
+use App\Http\Controllers\SuporteController;
 use App\Http\Controllers\VotosAjudasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -60,10 +61,13 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::put('/passagens/inativar/{idPassagem}', [PassagemController::class, 'inativarPassagem']);
     Route::post('/storeCartao/{id}', [CartaoController::class, 'storeCartao']);
     Route::post('/storeVoto/{id}', [VotosAjudasController::class, 'store']);
+    Route::post('/storeSuporte/{id}', [PassageiroController::class, 'storeSuporte']);
     Route::get('/voto/{id}/{idAjuda}', [VotosAjudasController::class, 'getVoto']);
     Route::get('/votoPorcentagem', [VotosAjudasController::class, 'getPorcentagemVoto']);
     Route::delete('/destroyCartao/{id}', [CartaoController::class, 'destroyCartao']);
     Route::post('/searchAjuda', [AjudaController::class, 'searchAjuda']);
+    Route::get('/getAjuda/{id}', [AjudaController::class, 'getAjuda']);
+
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
     Route::post('/insertFoto/{idPassageiro}', [PassageiroController::class, 'insertFoto']);
     

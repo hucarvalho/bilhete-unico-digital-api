@@ -30,5 +30,7 @@ class AjudaRepository extends AbstractRepository implements AjudaRepositoryInter
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+  
    
 }

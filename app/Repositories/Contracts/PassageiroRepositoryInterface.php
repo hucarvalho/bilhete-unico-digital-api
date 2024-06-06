@@ -13,6 +13,7 @@ interface PassageiroRepositoryInterface{
     public function getPassagemAtiva($idBilhete);
     public function storeCompra($dados, $idAcao, $dataAcao);
     public function storeConsumo($request, $acaoId, $data);
+    public function storeSuporte($request, $acaoId, $data);
     public function storeAcao($request,$acao,$id);
     public function inativarPassagem($idPassagem);
     public function callConsumo($idCatraca, $idBilhete);

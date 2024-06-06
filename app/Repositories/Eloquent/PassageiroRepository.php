@@ -7,6 +7,7 @@ use App\Models\Compra;
 use App\Models\Consumo;
 use App\Models\Passageiro;
 use App\Models\Passagem;
+use App\Models\Suporte;
 use App\Repositories\Contracts\PassageiroRepositoryInterface;
 use Exception;
 
@@ -155,9 +156,7 @@ class PassageiroRepository extends AbstractRepository implements PassageiroRepos
             'forma' => $compra->forma_pagamento_id,
             'dataCompra' => $dataAcao,
         ];
-
         return response()->json([
-
             'message' => $data
         ]);
     }catch(Exception $e){
@@ -165,10 +164,24 @@ class PassageiroRepository extends AbstractRepository implements PassageiroRepos
             'message' => $e->getMessage()
         ]);
     }
-
-
-
     }
+    public function storeSuporte($request, $idAcao, $id)
+    {
+        try {
+            $data = $request;
+            $data['acao_id'] = $idAcao;
+            Suporte::create($data);
+            return response()->json([
+                'message' => 'Inserido com sucesso',
+                'data' =>$data
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    
     public function storeConsumo($request, $acaoId, $data){
 
         
@@ -239,8 +252,8 @@ class PassageiroRepository extends AbstractRepository implements PassageiroRepos
              
             case 'Consumo':
                return $this->storeConsumo($request->all(), $acao->id, $acao->dataAcao);
-             
-        
+            case 'Suporte':
+                return $this->storeSuporte($request->all(), $acao->id, $acao->dataAcao);
         }
     }
     public function inativarPassagem($idPassagem)

@@ -63,6 +63,9 @@ class PassageiroController extends Controller
     public function storeConsumo($request, $acaoId, $data){
         return $this->model->storeConsumo($request, $acaoId, $data);
         }
+    public function storeSuporte($request, $acaoId, $data){
+        return $this->model->storeSuporte($request, $acaoId, $data);
+        }
 
     public function inativarPassagem($idPassagem)
     {

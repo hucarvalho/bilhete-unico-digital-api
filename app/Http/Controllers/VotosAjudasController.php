@@ -43,30 +43,28 @@ class VotosAjudasController extends Controller
 
         );
     }
-    public function getPorcentagemVoto(){
-        // Obtém os IDs de todas as ajudas
-        $ajuda_ids = Ajuda::all()->pluck('id');
-        
-        // Array para armazenar os resultados
-        $resultados = [];
-        
-        // Itera sobre cada ID de ajuda
-        foreach($ajuda_ids as $id){
-            // Obtém o título da ajuda
-            $ajuda_title = Ajuda::find($id)->tituloAjuda;
-            
-            // Executa a consulta e obtém a contagem de votos úteis
-            $count = VotosAjudas::where('ajuda_id', $id)
+    public function getPorcentagemVoto()
+    {
+        // Obtém todas as ajudas com seus IDs e contagens de votos úteis
+        $ajudas = Ajuda::all()->map(function ($ajuda) {
+            $count = VotosAjudas::where('ajuda_id', $ajuda->id)
                         ->where('util', 1)
                         ->count();
-            
-            // Armazena o resultado no array
-            $resultados[$id] = [$ajuda_title => $count];
-        }
-        
+            return [
+                'id' => $ajuda->id,
+                'titulo' => $ajuda->tituloAjuda,
+                'votos_uteis' => $count
+            ];
+        });
+    
+        // Ordena as ajudas em ordem decrescente com base nos votos úteis
+        $ajudas = $ajudas->sortByDesc('votos_uteis')->values()->take(3); // Adicionando ->values()
+    
         // Retorna os resultados como JSON
-        return response()->json($resultados);
+        return response()->json($ajudas);
     }
+    
+
     
     
 }

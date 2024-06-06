@@ -18,7 +18,14 @@ class AjudaController extends Controller
     public function searchAjuda(Request $request){
       return $this->model->searchAjuda($request);
     }
+    public function getAjuda($id)
+    {
+      
+        $data = Ajuda::where('id',$id)->get();
 
+        return $data; // Aqui você está retornando o valor associado com a chave $id
+    }
+    
     
     
     
