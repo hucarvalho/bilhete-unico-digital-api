@@ -5,6 +5,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BilheteController;
 use App\Http\Controllers\CartaoController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PassageiroController;
 use App\Http\Controllers\PassagemController;
 use App\Http\Controllers\SuporteController;
@@ -67,6 +68,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::delete('/destroyCartao/{id}', [CartaoController::class, 'destroyCartao']);
     Route::post('/searchAjuda', [AjudaController::class, 'searchAjuda']);
     Route::get('/getAjuda/{id}', [AjudaController::class, 'getAjuda']);
+    Route::get('/getChat/{tituloAjuda}', [ChatController::class, 'chat']);
 
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
     Route::post('/insertFoto/{idPassageiro}', [PassageiroController::class, 'insertFoto']);
