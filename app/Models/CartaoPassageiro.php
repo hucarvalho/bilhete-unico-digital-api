@@ -19,6 +19,7 @@ class CartaoPassageiro extends Model
         'contaCartao',
         'agenciaCartao',
         'validadeCartao',
+        'apelidoCartao',
         'passageiro_id'
     ];
 
