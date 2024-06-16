@@ -8,6 +8,7 @@ use App\Http\Controllers\CartaoController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PassageiroController;
 use App\Http\Controllers\PassagemController;
+use App\Http\Controllers\PedidoBilheteController;
 use App\Http\Controllers\SuporteController;
 use App\Http\Controllers\VotosAjudasController;
 use Illuminate\Http\Request;
@@ -72,6 +73,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
 
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
     Route::post('/insertFoto/{idPassageiro}', [PassageiroController::class, 'insertFoto']);
+    Route::get('/pedidoBilhete/{passageiroId}', [PedidoBilheteController::class, 'getByPassageiroId']);
     
 
 Route::group(['middleware'=>'jwt.auth'], function($router){
