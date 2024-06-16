@@ -75,7 +75,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::post('/insertFoto/{idPassageiro}', [PassageiroController::class, 'insertFoto']);
     Route::get('/pedidoBilhete/{passageiroId}', [PedidoBilheteController::class, 'getByPassageiroId']);
     Route::post('/pedidoBilhete/store/{idPassageiro}', [PedidoBilheteController::class, 'store']);
-    
+    Route::post('/pedidoBilhete/payTaxaStoreBilhete/{pedidoBilhete}', [PedidoBilheteController::class, 'payAndStoreTaxaEmissao']);
 
 Route::group(['middleware'=>'jwt.auth'], function($router){
     Route::get('/bilhetes/{idPassageiro}', [BilheteController::class, 'getBilhetes']);
