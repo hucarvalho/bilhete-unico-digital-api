@@ -13,4 +13,5 @@ class ChatController extends Controller
         $data = Ajuda::where('tituloAjuda', 'LIKE', "%{$search}%")->get()->pluck('tituloAjuda');
         return $data;
     }
+    
 }
