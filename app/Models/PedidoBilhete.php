@@ -15,10 +15,7 @@ class PedidoBilhete extends Model
         'passageiro_id',
         'created_at'
     ];
-    protected static function newFactory()
-    {
-        return PedidoBilheteFactory::new();
-    }
+   
     public function passageiro()
     {
         return $this->belongsTo(Passageiro::class);

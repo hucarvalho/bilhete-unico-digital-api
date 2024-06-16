@@ -52,7 +52,7 @@ class PedidoBilheteRepository extends AbstractRepository implements PedidoBilhet
     public function getByPassageiroId($passageiroId)
     {
         return $this->model
-                ->select('statusPedido as status', 'tipoBilhete as tipo', 'created_at as data')
+                ->select('id','statusPedido as status', 'tipoBilhete as tipo', 'created_at as data')
                 ->where('passageiro_id', $passageiroId)
                 ->get();
     }

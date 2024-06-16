@@ -74,6 +74,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
     Route::post('/insertFoto/{idPassageiro}', [PassageiroController::class, 'insertFoto']);
     Route::get('/pedidoBilhete/{passageiroId}', [PedidoBilheteController::class, 'getByPassageiroId']);
+    Route::post('/pedidoBilhete/store/{idPassageiro}', [PedidoBilheteController::class, 'store']);
     
 
 Route::group(['middleware'=>'jwt.auth'], function($router){

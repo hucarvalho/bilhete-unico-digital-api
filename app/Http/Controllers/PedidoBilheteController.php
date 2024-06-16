@@ -17,8 +17,18 @@ class PedidoBilheteController extends Controller
     public function getByPassageiroId($passageiroId)
     {
         $pedido =  $this->model->getByPassageiroId($passageiroId);
-
+        
         return response()->json($pedido);
+    }
+    public function store(Request $request, $idPassageiro)
+    {
+        $data = [
+            'tipoBilhete' => $request->tipo,
+            'statusPedido' => "Aberto",
+            'passageiro_id' => $idPassageiro,
+            'created_at' => now()
+        ];
+        return $this->model->create($data);
     }
 
 }

@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\Eloquent\BilheteRepository'
         );
         $this->app->bind(
-            'App\Repositories\Contracts\PedidoBilheteRespositoryInterface',
+            'App\Repositories\Contracts\PedidoBilheteRepositoryInterface',
             'App\Repositories\Eloquent\PedidoBilheteRepository'
         );
     }

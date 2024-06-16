@@ -11,4 +11,5 @@ interface PedidoBilheteRepositoryInterface
     public function findWithPassageiro($id);
     public function update($id, $data);
     public function getByPassageiroId($passageiroId);
+    public function create($data);
 }
