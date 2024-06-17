@@ -25,9 +25,14 @@ class PedidoBilheteController extends Controller
     }
     public function store(Request $request, $idPassageiro)
     {
+        if($request->tipo == "Comum" || $request->tipo == "Idoso"){
+            $status = "Aprovado";
+        }else{
+            $status = "Aberto";
+        }
         $data = [
             'tipoBilhete' => $request->tipo,
-            'statusPedido' => "Aberto",
+            'statusPedido' => $status,
             'passageiro_id' => $idPassageiro,
             'created_at' => now()
         ];
