@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AcaoController;
 use App\Http\Controllers\AjudaController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
@@ -70,7 +71,7 @@ Route::group(['middleware'=>'api', 'prefix'=>'auth'], function($router){
     Route::post('/searchAjuda', [AjudaController::class, 'searchAjuda']);
     Route::get('/getAjuda/{id}', [AjudaController::class, 'getAjuda']);
     Route::get('/getChat/{tituloAjuda}', [ChatController::class, 'chat']);
-
+    Route::get('/acoes/{id}', [AcaoController::class, 'getAcoes']);
     Route::get('/getCartao/{id}', [CartaoController::class, 'getCartao']);
     Route::post('/insertFoto/{idPassageiro}', [PassageiroController::class, 'insertFoto']);
     Route::get('/pedidoBilhete/{passageiroId}', [PedidoBilheteController::class, 'getByPassageiroId']);
