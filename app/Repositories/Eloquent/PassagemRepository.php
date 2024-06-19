@@ -34,7 +34,7 @@ class PassagemRepository extends AbstractRepository implements PassagemRepositor
                         ->join('carros', 'consumos.carro_id', 'carros.id')
                         ->join('linhas', 'carros.linha_id', 'linhas.id')
                         ->where('passagems.bilhete_id', $idBilhete)
-                        ->orderBy('consumos.id', 'desc')
+                        ->orderBy('acaos.dataAcao', 'desc')
                         ->take(7)
                         ->get();
         //quantidade total dos consumos                        
