@@ -85,9 +85,10 @@ class PassageiroController extends Controller
         $passageiro = $this->model->findById($idPassageiro);
         
 
-       
-        if(Storage::exists($passageiro->fotoPassageiro != null && $passageiro->fotoPassageiro)){
+       if($passageiro->fotoPassageiro != null){
+        if(Storage::exists($passageiro->fotoPassageiro)){
             Storage::delete($passageiro->fotoPassageiro);
+        }
         }
         
         
