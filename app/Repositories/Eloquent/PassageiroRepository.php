@@ -111,7 +111,8 @@ class PassageiroRepository extends AbstractRepository implements PassageiroRepos
     }
     public function getPreco($preco)
     {
-        return $preco->find(1)->passagemPreco;
+
+        return $preco->find($preco->max('id'))->passagemPreco;
     }
     public function checkLastConsumo($idPassagem)
     {
