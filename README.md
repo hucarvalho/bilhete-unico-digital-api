@@ -3,6 +3,7 @@
 > ## This is an API that is consumed by the Bilhete Único Digital mobile application and the bus turnstile prototype developed by the company Vértice, using Arduino. It enables features such as simulating ticket payments, consuming tickets at the turnstile while considering the type of ticket, whether it has full or partial fare exemption, viewing available tickets, and real-time ticket integration.
 
 ![Captura de tela 2024-07-10 220944](https://github.com/hucarvalho/bilhete-unico-digital-api/assets/142733241/a5d45c78-fcea-4bc4-9a74-5790aa7e1932)
+![Captura de tela 2024-07-10 221009](https://github.com/hucarvalho/bilhete-unico-digital-api/assets/142733241/9dea3bf9-c440-4d30-b4fa-0bedd723432f)
 
 
 <details>
